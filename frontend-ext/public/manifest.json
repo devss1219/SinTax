@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "SinTax Helper",
+  "version": "1.0",
+  "description": "Smart extension for SinTax project",
+  "action": {
+    "default_popup": "index.html"
+  }
+}
