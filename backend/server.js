@@ -16,17 +16,27 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB connected successfully!'))
   .catch((err) => console.log('❌ Database connection error:', err));
 
+// GET Route - Server check karne ke liye
 app.get('/', (req, res) => {
     res.send('SinTax Backend is Running perfectly, Ridhima! 🚀');
 });
 
-// 👇 NAYA POST ROUTE YAHAN ADD KIYA HAI 👇
-app.post('/api/save', (req, res) => {
-    const incomingData = req.body.data;
-    console.log("🚀 Extension se data aaya:", incomingData);
+// POST Route - Extension se data save karne ke liye
+app.post('/api/save', async (req, res) => {
+  const incomingData = req.body.data;
+  console.log("🚀 Extension se data aaya:", incomingData);
+  
+  try {
+    // Naya document banakar save kar rahe hain
+    const newData = new SinTaxData({ content: incomingData });
+    await newData.save(); 
     
-    // Response wapas bhej rahe hain extension ko
-    res.json({ success: true, message: "Backend received your data!", data: incomingData });
+    console.log("💾 Data MongoDB mein successfully save ho gaya!");
+    res.json({ success: true, message: "Backend received and saved your data!" });
+  } catch (error) {
+    console.error("Save Error:", error);
+    res.status(500).json({ success: false, message: "Database mein save karte waqt error aaya." });
+  }
 });
 
 // Server Start
