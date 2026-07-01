@@ -11,15 +11,17 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB connected successfully!'))
   .catch((err) => console.log('❌ Database connection error:', err));
 
-<<<<<<< Updated upstream
+// GET Route - Server check karne ke liye
 app.get('/', (req, res) => {
     res.send('SinTax Backend is Running perfectly, Ridhima! 🚀');
-=======
-// UPDATED POST ROUTE
+});
+
+// POST Route - Extension se data save karne ke liye
 app.post('/api/save', async (req, res) => {
   const incomingData = req.body.data;
   console.log("🚀 Extension se data aaya:", incomingData);
@@ -35,9 +37,9 @@ app.post('/api/save', async (req, res) => {
     console.error("Save Error:", error);
     res.status(500).json({ success: false, message: "Database mein save karte waqt error aaya." });
   }
->>>>>>> Stashed changes
 });
 
+// Server Start
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
